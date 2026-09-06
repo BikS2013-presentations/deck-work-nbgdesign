@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The nbg-design skill — explained</title>
+<meta name="description" content="A 38-slide HTML presentation explaining the nbg-design Claude Code skill: what it makes possible, how to ask for, build and edit a deck, and how to make it your own.">
+<style>
+  :root{--teal:#003841;--teal2:#007B85;--cyan:#00ADBF;--ink:#0A1416;--grey:#5B6B6D;--rule:#BEC1BE;--cream:#F5F8F6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:Aptos,"Segoe UI",Inter,Helvetica,Arial,sans-serif;line-height:1.5}
+  header{background:var(--teal);color:#fff;padding:64px 24px 56px}
+  .wrap{max-width:960px;margin:0 auto}
+  .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin:0 0 14px}
+  h1{font-size:clamp(34px,6vw,56px);line-height:1.05;margin:0 0 18px;font-weight:800;letter-spacing:-.01em}
+  header p{font-size:19px;max-width:640px;margin:0 0 30px;color:rgba(255,255,255,.86)}
+  .btns{display:flex;flex-wrap:wrap;gap:12px}
+  .btn{display:inline-block;padding:13px 22px;border-radius:8px;font-weight:700;text-decoration:none;font-size:16px}
+  .btn.p{background:var(--cyan);color:var(--teal)}
+  .btn.s{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}
+  main{padding:44px 24px 70px}
+  section{margin:0 0 40px}
+  h2{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal2);margin:0 0 14px;padding-left:10px;border-left:3px solid var(--cyan)}
+  ul{list-style:none;padding:0;margin:0;background:#fff;border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+  li{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:14px 18px;border-bottom:1px solid #E4EAEA}
+  li:last-child{border-bottom:0}
+  li a{color:var(--teal);font-weight:700;text-decoration:none}
+  li a:hover{color:var(--cyan)}
+  li span{color:var(--grey);font-size:14px;text-align:right}
+  pre{background:var(--ink);color:var(--cream);padding:18px 20px;border-radius:12px;overflow-x:auto;font-size:15px;line-height:1.7;margin:0}
+  pre .c{color:#00CFE7}
+  p.note{color:var(--grey);font-size:15px;margin:12px 0 0}
+  footer{padding:0 24px 40px;color:var(--grey);font-size:14px}
+  footer .wrap{border-top:1px solid var(--rule);padding-top:18px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <p class="eyebrow">A presentations skill inspired by the NBG brand</p>
+  <h1>The nbg-design skill,<br>explained</h1>
+  <p>A 38-slide presentation, built with the skill itself: what it makes possible, how to ask for, build and edit a deck, and how to make it your own. Open it in any modern browser — and right-click any slide to try the built-in editor.</p>
+  <div class="btns">
+    <a class="btn p" href="deck/NBG-Design-Skill-Explained-latest.html">Open the deck</a>
+    <a class="btn s" href="deck/NBG-Design-Skill-Explained-latest.pdf">PDF, one page per slide</a>
+    <a class="btn s" href="https://github.com/BikS2013-presentations/deck-work-nbgdesign">Source on GitHub</a>
+  </div>
+</div></header>
+<main><div class="wrap">
+  <section>
+    <h2 id="deck">The deck</h2>
+    <ul>
+      <li><a href="deck/NBG-Design-Skill-Explained-latest.html">NBG-Design-Skill-Explained-latest.html</a><span>always the newest version · self-contained · right-click editor inside</span></li>
+      <li><a href="deck/NBG-Design-Skill-Explained-latest.pdf">NBG-Design-Skill-Explained-latest.pdf</a><span>printed by the browser engine, 38 pages</span></li>
+      <li><a href="deck/NBG-Design-Skill-Explained-latest.rebuild.mjs">NBG-Design-Skill-Explained-latest.rebuild.mjs</a><span>re-embeds newer editing tools after a skill update</span></li>
+    </ul>
+    <p class="note">Double-click any text to edit it; right-click for Resize / move shape, Edit SVG, Ask the assistant, Export to PDF and Save edited copy. Edits stay in your browser until you save a copy.</p>
+  </section>
+  <section>
+    <h2 id="diagrams">The diagrams, as standalone pages</h2>
+    <ul>
+      <li><a href="deck/diagrams/nbg-design-layers.html">Five layers</a><span>how the skill is built, layer by layer</span></li>
+      <li><a href="deck/diagrams/nbg-design-sequence.html">A deck, end to end</a><span>you · Claude and the skill · scripts · browser · recipient</span></li>
+      <li><a href="deck/diagrams/nbg-design-flow.html">The pipeline</a><span>five steps and one gate</span></li>
+      <li><a href="deck/diagrams/nbg-design-tree.html">What a viewer can do</a><span>the right-click editor, by family</span></li>
+      <li><a href="deck/diagrams/nbg-design-arch.html">Inside a delivered deck</a><span>slides, editor, browser storage, ways out</span></li>
+    </ul>
+  </section>
+  <section>
+    <h2 id="install">Install the skill in Claude Code</h2>
+<pre><span class="c"># register the public marketplace once, then install the plugin</span>
+/plugin marketplace add BikS2013-coding-agents/nbg-design
+/plugin install nbg-design@nbg-design
+<span class="c"># later, to pick up a new release</span>
+/plugin marketplace update nbg-design
+claude plugin update nbg-design@nbg-design</pre>
+    <p class="note">Marketplace: <a href="https://github.com/BikS2013-coding-agents/nbg-design">github.com/BikS2013-coding-agents/nbg-design</a>. Node 18+ for the scripts; a Chromium-based browser only for screenshots and the PDF.</p>
+  </section>
+</div></main>
+<footer><div class="wrap">The look is inspired by the NBG brand. This is not an official National Bank of Greece publication.</div></footer>
+</body>
+</html>
