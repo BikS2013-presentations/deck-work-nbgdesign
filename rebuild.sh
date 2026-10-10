@@ -6,7 +6,7 @@
 #   ./rebuild.sh --check    only report what changed, build nothing
 #
 # Output (next to this script, in deck/): only the newest version is kept —
-#   NBG-Design-Skill-Explained-latest.html / .pdf / .rebuild.mjs   the stable names to link to
+#   NBG-Design-Skill-Explained-latest.html / .pdf / .pptx / .rebuild.mjs   the stable names to link to
 #   VERSION                                                         the build number (v<N>); older builds live in git history
 set -euo pipefail
 
@@ -45,7 +45,11 @@ node "$SKILL/scripts/write-rebuild-script.mjs" "$OUT" >/dev/null
 rm -rf "$HERE"/shots-v*
 node "$SKILL/scripts/screenshot-deck.mjs" "$OUT" -o "$HERE/shots-v$next" | grep Wrote || true
 node "$SKILL/scripts/export-pdf.mjs" "$OUT" >/dev/null
+node "$SKILL/scripts/export-pptx.mjs" "$OUT" | grep -E "slides:|text boxes"
+# the PowerPoint check (needs PowerPoint or LibreOffice, and poppler); its images stay out of git
+rm -rf "$HERE"/pptx-check-v*
+node "$SKILL/scripts/compare-pptx.mjs" "$OUT" "$OUTDIR/$NAME-latest.pptx" -o "$HERE/pptx-check-v$next" | grep "slide " | sort -k5 -rn | head -3 || echo "PowerPoint comparison skipped (renderer or poppler missing)"
 pages="$(python3 -c "import re,sys;print(len(re.findall(rb'/Type\s*/Page[^s]',open(sys.argv[1],'rb').read())))" "$OUTDIR/$NAME-latest.pdf")"
 echo "PDF: $pages pages"
 echo "$next" > "$VERSION_FILE"
-echo "RESULT: BUILT v$next → $OUT / .pdf / .rebuild.mjs"
+echo "RESULT: BUILT v$next → $OUT / .pdf / .pptx / .rebuild.mjs"

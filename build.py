@@ -47,7 +47,7 @@ add(0, f'''
     <h1 class="cover-title sm">The<br>nbg-design<br>skill</h1>
     <div class="cover-rule"></div>
     <p class="cover-sub">How it is built, how it works, and how anyone who receives a deck can edit it.</p>
-    <div class="cover-meta"><span>Skill v1.19.0</span><span class="dot"></span><span class="acc">Sep 2026</span></div>
+    <div class="cover-meta"><span>Skill v1.25.0</span><span class="dot"></span><span class="acc">Oct 2026</span></div>
     <div class="logo-primary cover-logo"></div>
   </div>
   <div class="cover-photo photo-athens"></div>
@@ -57,7 +57,7 @@ add(0, f'''
 # ================================================================= 2 agenda
 add(0, f'''
     <div class="ag-left">
-      <div class="eyebrow">nbg-design · Sep 2026</div>
+      <div class="eyebrow">nbg-design · Oct 2026</div>
       <div class="ag-title">Agenda</div>
       <div class="ag-rule"></div>
       <p class="ag-cap">Three sections. Each stands on its own.</p>
@@ -76,13 +76,13 @@ add(0, header(EX, "WHAT THE SKILL IS", "One Claude Code skill that turns a reque
 <div class="body fill">
   <div class="grid3" style="gap:28px">
     {mini("layers","A design system in a box",'<ul><li>A design system <b>inspired by the NBG brand</b>: 16:9 artboard, Aptos, a nine-colour teal-led palette.</li><li>Nine slide templates (covers, dividers, content), logos and photography bundled with the skill.</li><li>Guardrails written down once, applied to every deck.</li></ul>', True)}
-    {mini("gear","A deterministic build pipeline",'<ul><li>Claude authors the HTML; six zero-dependency scripts embed the images, add the editor, verify, write the rebuild script, screenshot and export.</li><li>A strict, browser-free gate that a deck must pass before it is delivered.</li><li>The PDF is printed from the deck itself, so it looks exactly like the HTML.</li></ul>', True)}
+    {mini("gear","A deterministic build pipeline",'<ul><li>Claude authors the HTML; zero-dependency scripts embed the images, add the editor, verify, write the rebuild script, screenshot and export.</li><li>A strict, browser-free gate that a deck must pass before it is delivered.</li><li>The PDF and the PowerPoint file are made from the deck itself, so they look like the HTML.</li></ul>', True)}
     {mini("hand","Decks the recipients can edit",'<ul><li>Every delivered deck carries a right-click editor: fix a word, resize a card, align a row, ask an AI assistant.</li><li>Nothing to install: it works from a file on the desktop, in any modern browser.</li><li>Edits stay inside the look: the skill\'s fonts and palette only.</li></ul>', True)}
   </div>
   <div class="band big" style="margin-top:44px">
     <div class="band-stat"><div class="stat-n">1 file</div><div class="stat-l">the whole deck: HTML with every image embedded</div></div>
     <div class="band-stat"><div class="stat-n">0</div><div class="stat-l">installs for the viewer, npm packages for the builder</div></div>
-    <div class="band-stat"><div class="stat-n">HTML + PDF</div><div class="stat-l">plus a rebuild script that refreshes the editor later; PowerPoint is out of scope</div></div>
+    <div class="band-stat"><div class="stat-n">HTML · PDF · PPTX</div><div class="stat-l">plus a rebuild script that refreshes the editor later; the PowerPoint file is editable, never screenshots</div></div>
     <div class="band-stat"><div class="stat-n">en · gr · bi</div><div class="stat-l">languages supported by the design system</div></div>
   </div>
 </div>''')
@@ -98,13 +98,13 @@ add(0, header(EX, "WHY IT MATTERS", "Four problems every presentation team knows
   <div class="insight"><span class="tag">Key point</span><p>The skill moves the effort from <b>making slides look right</b> to <b>deciding what they should say</b>.</p></div>
 </div>''')
 
-add(0, header(EX, "WHAT YOU RECEIVE", "Three files per deck, produced and verified the same way every time.") + f'''
+add(0, header(EX, "WHAT YOU RECEIVE", "The files of a deck, produced and verified the same way every time.") + f'''
 <div class="body fill"><div class="two">
   <div>
     <div class="seclbl">The deliverables</div>
     {lst([("doc","<b>The HTML deck</b> — 1920×1080 slides that scale to any screen, keyboard and button navigation, every logo and photo embedded, the right-click editor inlined."),
           ("download","<b>The PDF</b> — printed from that HTML by the browser engine: one page per slide, vector text, same colours and photography, verified page count."),
-          ("monitor","<b>Screenshots</b> (on request) — one PNG per slide at 1366×768 and 1440×900, the two viewports the skill requires to check."),
+          ("monitor","<b>The PowerPoint file</b> (on request) — converted from that HTML element by element: text boxes, shapes and pictures you edit in PowerPoint, checked slide by slide against the deck."),
           ("refresh","<b>The rebuild script</b> — <code class='code'>deck.rebuild.mjs</code>: run it after the skill is updated and the deck receives the newer editing tools, verified, with its PDF re-exported — no regeneration."),
           ("wrench","<b>A generator</b> for data-driven decks — a small Python script that rebuilds the deck from its content, so updates are a diff, not a redo.")])}
   </div>
@@ -112,21 +112,21 @@ add(0, header(EX, "WHAT YOU RECEIVE", "Three files per deck, produced and verifi
     <div class="seclbl">What the skill asks before it starts</div>
     {lst([("chat","<b>Topic, audience, slide count.</b> The three inputs it never guesses; it asks instead."),
           ("globe","<b>Language</b> — English by default; Greek or bilingual on request."),
-          ("doc","<b>Output</b> — HTML by default; \"send as PDF\" adds the export."),
-          ("alert","<b>Not PowerPoint.</b> If asked, it says so and delivers HTML and PDF — no improvised conversion.")])}
+          ("doc","<b>Output</b> — HTML by default; \"send as PDF\" adds the PDF, \"in PowerPoint\" an editable .pptx."),
+          ("alert","<b>No pictures of slides.</b> PDF and PowerPoint are exported from the finished HTML, never authored separately or stitched from screenshots.")])}
     <div class="band" style="margin-top:28px"><p class="band-t">No fallbacks: a missing input is a question to you, never a silent default.</p></div>
   </div>
 </div></div>''')
 
 # ================================================================= SECTION 02 — team
-add(0, header(EX, "THE NEWEST CAPABILITIES", "What arrived most recently in the skill. Each is explained in section 02; the recipient needs no new tooling for any of them.") + f'''
+add(0, header(EX, "THE NEWEST CAPABILITIES", "What arrived most recently in the skill. Each is explained further on; the recipient needs no new tooling for any of them.") + f'''
 <div class="body fill"><div class="grid4" style="gap:24px">
   {mini("layers","Edit SVG",'<ul><li>A drawn icon, diagram or chart is no longer a picture: its <b>parts</b> — paths, shapes, text, groups — move, resize, recolour, reorder, duplicate and reword in place.</li><li>Path data is never rewritten; one reversible record per drawing.</li></ul>', True)}
   {mini("gear","One toolbar, three tabs",'<ul><li><b>Text</b>, <b>Shape</b> and <b>SVG</b> share one floating panel; the tab of the editor in use comes to the front by itself.</li><li>Pin, hide, anchor or detach it — remembered per deck.</li></ul>', True)}
-  {mini("users","Smarter selection",f'<ul><li>{kbd("Shift")}+click takes the smallest shape under the pointer; {kbd("Ctrl/Cmd")}+click selects everything inside a shape.</li><li>A compact <b>picker</b> at the pointer when the menu is detached; the <b>Stack</b> list for nested levels.</li></ul>', True)}
+  {mini("monitor","PowerPoint export",'<ul><li>Any deck as an <b>editable .pptx</b> (1.25): real text boxes with their fonts and weights, shapes, cropped pictures, SVG pictures — never slide screenshots.</li><li>Checked against the deck in <b>PowerPoint itself</b>, slide by slide.</li></ul>', True)}
   {mini("refresh","The rebuild script",'<ul><li>Every deck ships with <code class="code">&lt;deck&gt;.rebuild.mjs</code>: after a skill update it re-embeds the newer editing tools, keeps a backup, re-verifies and re-exports the PDF.</li><li><code class="code">--check</code> only reports.</li></ul>', True)}
 </div>
-<div class="insight"><span class="tag">Also</span><p>27 bundled photos with a written catalogue (Athens at dusk, data centre, network, microchip, security, developer, team analytics — three takes each); assistant settings kept <b>per provider</b> and an <i>Ask about…</i> popup on any row of the Outline or Tree; a full set of <b>keyboard shortcuts</b> for text, shapes, SVG parts and panels; PDFs whose shadows render correctly in <b>macOS Preview</b> (1.19).</p></div>
+<div class="insight"><span class="tag">Also</span><p>27 bundled photos with a written catalogue (Athens at dusk, data centre, network, microchip, security, developer, team analytics — three takes each); assistant settings kept <b>per provider</b> and an <i>Ask about…</i> popup on any row of the Outline or Tree; a full set of <b>keyboard shortcuts</b> for text, shapes, SVG parts and panels; PDFs whose shadows render correctly in <b>macOS Preview</b> (1.19); <b>four themes</b> chosen per deck — NBG, BikS2013, AIHub, Instrument (1.20–1.23).</p></div>
 </div>''')
 
 divider("02", "Section 02", "Ask,<br>build, edit", "Asking for a deck, what happens in between, the quality gates, and everything the right-click editor can do.")
@@ -152,7 +152,7 @@ add(0, header(TM, "INSTALLING THE SKILL", "One public marketplace, two commands.
   <div>
     <div class="seclbl">What lands on the machine</div>
     {lst([("doc","The plugin is cached under <code class='code'>~/.claude/plugins/cache/nbg-design/nbg-design/&lt;version&gt;/</code>; the skill root is its <code class='code'>skills/nbg-design/</code> folder — the <code class='code'>&lt;skill-root&gt;</code> the pipeline commands use."),
-          ("wrench","<b>Requirements</b>: Node 18 or newer for the scripts. Chrome, Chromium or Edge only for screenshots and the PDF; without a browser the strict verifier is still the gate and the PDF is exported elsewhere."),
+          ("wrench","<b>Requirements</b>: Node 18 or newer for the scripts. Chrome, Chromium or Edge only for screenshots, the PDF and the PowerPoint export (its check also uses PowerPoint or LibreOffice, and poppler); without a browser the strict verifier is still the gate and the exports are made elsewhere."),
           ("key","<b>Nothing to configure.</b> The skill holds no credentials and reads no configuration file; assistant keys are entered by each viewer in their own browser."),
           ("refresh","A delivered deck outlives the install: after an update, <code class='code'>node &lt;deck&gt;.rebuild.mjs</code> re-embeds the newer editing tools — pointed at the new cache folder with <code class='code'>--scripts</code> or <code class='code'>NBG_DESIGN_SCRIPTS</code> when the recorded one is gone.")], True)}
   </div>
@@ -161,8 +161,8 @@ add(0, header(TM, "INSTALLING THE SKILL", "One public marketplace, two commands.
 add(0, header(TM, "ASKING FOR A DECK", "What the skill needs from you, what it decides by itself, and what it refuses to do.") + f'''
 <div class="body fill"><div class="grid3" style="gap:28px">
   {mini("chat","It always asks for",'<ul><li><b>Topic</b> — what the deck is about.</li><li><b>Audience</b> — who reads it; this sets depth and tone.</li><li><b>Slide count or depth</b> — 8, 16, 20+.</li><li>Whether the bundled design-system files may be changed (they normally are not).</li></ul>', True)}
-  {mini("check","Approved defaults",'<ul><li><b>Language</b>: English. <code class="code">gr</code> and <code class="code">bi</code> exist; anything else must come from you.</li><li><b>Output</b>: HTML. A PDF is always exported from the finished HTML, never authored separately.</li><li><b>Logo</b>: shown, unless you ask to hide it.</li><li>Cover first, dividers between sections, content slides in between.</li></ul>', True)}
-  {mini("alert","It will not",'<ul><li>Produce or convert to <b>PowerPoint</b>.</li><li>Guess a missing input or substitute a fallback value.</li><li>Put an API key, token or endpoint into a deck or into the skill.</li><li>Reference an image by a path: every image is embedded, or the deck fails the gate.</li></ul>', True)}
+  {mini("check","Approved defaults",'<ul><li><b>Language</b>: English. <code class="code">gr</code> and <code class="code">bi</code> exist; anything else must come from you.</li><li><b>Output</b>: HTML. A PDF or a PowerPoint file is always exported from the finished HTML, never authored separately.</li><li><b>Logo</b>: shown, unless you ask to hide it.</li><li>Cover first, dividers between sections, content slides in between.</li></ul>', True)}
+  {mini("alert","It will not",'<ul><li>Hand over a <b>PowerPoint made of slide pictures</b>: the .pptx is converted element by element.</li><li>Guess a missing input or substitute a fallback value.</li><li>Put an API key, token or endpoint into a deck or into the skill.</li><li>Reference an image by a path: every image is embedded, or the deck fails the gate.</li></ul>', True)}
 </div>
 <div class="insight"><span class="tag">Any content is a source</span><p>A brief typed in chat, meeting notes, a Word or Markdown document, a spreadsheet, a report, an existing HTML deck, or a Google Slides draft (read through the Slides API and rebuilt 1:1, page count kept). The skill turns whatever it is given into a cover, dividers and content slides; it only asks for what it cannot infer.</p></div>
 </div>''')
@@ -178,7 +178,7 @@ add(0, header(TM, "THE PIPELINE, STEP BY STEP", "What each step does and the com
     <div class="step"><div class="step-h"><span class="stepn">2</span>{ico("download",28)}</div><h4>Embed the assets</h4><p>Every token becomes the verbatim base64 image. The script finds the assets next to itself, so it works from any folder and any machine.</p><span class="cmd">embed-assets.mjs deck.html</span></div>
     <div class="step"><div class="step-h"><span class="stepn">3</span>{ico("wrench",28)}</div><h4>Add the editor</h4><p>One script block is inlined before <code class="code">&lt;/body&gt;</code>: the right-click menu, editing, toolbars, assistant, print. Re-running upgrades an older block.</p><span class="cmd">add-deck-menu.mjs deck.html</span></div>
     <div class="step"><div class="step-h"><span class="stepn">4</span>{ico("shield",28)}</div><h4>Verify (strict)</h4><p>Browser-free gate: no unresolved tokens, no external image paths, real logo, enough images, current menu. A failing deck is never delivered.</p><span class="cmd">verify-deck.mjs deck.html --strict</span></div>
-    <div class="step"><div class="step-h"><span class="stepn">5</span>{ico("monitor",28)}</div><h4>Script, look, print</h4><p>The deck's rebuild script is written next to it; screenshots per slide are read for overlaps and clipping; then the PDF is printed, one page per slide.</p><span class="cmd">write-rebuild-script.mjs · screenshot-deck.mjs · export-pdf.mjs</span></div>
+    <div class="step"><div class="step-h"><span class="stepn">5</span>{ico("monitor",28)}</div><h4>Script, look, export</h4><p>The rebuild script is written next to the deck; screenshots are read for overlaps and clipping; the PDF is printed, and on request the PowerPoint file converted and compared.</p><span class="cmd">screenshot-deck · export-pdf · export-pptx</span></div>
   </div>
   <div class="insight"><span class="tag">Why tokens</span><p>Hand-pasting a 600 KB base64 photo is the step that silently fails on a headless run. Tokens make embedding a script's job, and the gate catches any slip.</p></div>
 </div>''')
@@ -211,7 +211,8 @@ add(0, header(TM, "QUALITY GATES", "What must be true before a deck leaves. The 
     {lst([("monitor","<b>Fit</b>: the full slide visible at 1366×768 and 1440×900 with no scrolling caused by the artboard."),
           ("layers","<b>No collisions</b>: title, body, card rows, callouts, footer and page number keep separate zones — at least 32 px between groups and 72 px above the footer. Crowded content is cut or split, never squeezed or hidden."),
           ("doc","<b>PDF = deck</b>: page count equals slide count and every slide box equals the page box, or the exporter exits with an error."),
-          ("search","<b>Read the pictures</b>: screenshots and rasterised PDF pages are inspected, not just produced.")], True)}
+          ("monitor","<b>PowerPoint ≈ deck</b>: compare-pptx renders the .pptx in PowerPoint and scores every slide against the HTML."),
+          ("search","<b>Read the pictures</b>: screenshots, PDF pages and comparison images are inspected, not just produced.")], True)}
   </div>
 </div></div>''')
 
@@ -407,54 +408,59 @@ add(0, header(TM, "KEYBOARD SHORTCUTS", "Every shortcut the editor understands, 
 </div></div>''')
 
 # ================================================================= SECTION 03 — developers
-divider("03", "Section 03", "Make it<br>your own", "How it is built: the folder, the scripts and libraries, the editor's internals, the PDF path, the configuration hook and the rules to keep.")
+divider("03", "Section 03", "Make it<br>your own", "How it is built: the folder, the scripts and libraries, the editor's internals, the PDF and PowerPoint paths, the configuration hook and the rules to keep.")
 
 add(0, header(DV, "HOW IT IS BUILT, IN FIVE LAYERS", "Each layer rests on the one below; extend the one you need. The editor is the layer that turns a deck into something recipients can change themselves.") + dg(SVG["layers"]))
 
-add(0, header(DV, "ANATOMY OF THE SKILL FOLDER", "15 MB, 14 of them photography; one Markdown file that is the whole behaviour, seven scripts, five libraries, and the design system with its assets.") + f'''
+add(0, header(DV, "ANATOMY OF THE SKILL FOLDER", "31 MB, 30 of them photography; one Markdown file that is the whole behaviour, nine scripts, seven libraries, and four themes with their assets.") + f'''
 <div class="body fill"><div class="cols" style="grid-template-columns:1fr 1fr;gap:60px">
   <div class="tree">
-<span class="d">nbg-design/</span><span class="cm">plugin nbg-design v1.19.0 · marketplace BikS2013-coding-agents/nbg-design · MIT</span><br>
-├─ <b>SKILL.md</b><span class="sz">60 KB · 388 lines</span><span class="cm">the single source of behaviour, defaults, assets, guardrails</span><br>
+<span class="d">nbg-design/</span><span class="cm">plugin nbg-design v1.25.0 · marketplace BikS2013-coding-agents/nbg-design · MIT</span><br>
+├─ <b>SKILL.md</b><span class="sz">104 KB · 621 lines</span><span class="cm">the single source of behaviour, defaults, assets, guardrails</span><br>
 ├─ <span class="d">NBG-Design/</span><br>
 │&nbsp;&nbsp;├─ NBG Design System.html<span class="sz">39 KB</span><span class="cm">visual reference</span><br>
 │&nbsp;&nbsp;├─ slide-templates.jsx<span class="sz">32 KB</span><span class="cm">nine 1920×1080 templates</span><br>
 │&nbsp;&nbsp;├─ tweaks-panel.jsx<span class="sz">24 KB</span><span class="cm">tweak / edit helper reference</span><br>
 │&nbsp;&nbsp;├─ <span class="d">assets/</span><span class="sz">14 MB</span><span class="cm">3 logos + 27 photos, each with a .datauri.txt</span><br>
 │&nbsp;&nbsp;└─ <span class="d">screenshots/</span><span class="cm">8 reference renders</span><br>
-├─ <span class="d">scripts/</span><span class="sz">500 KB</span><span class="cm">seven scripts, five libraries</span><br>
+├─ <span class="d">BikS2013-Design/ · AIHub-Design/ · Instrument-Design/</span><span class="cm">the other three themes</span><br>
+├─ <span class="d">scripts/</span><span class="sz">660 KB</span><span class="cm">nine scripts, seven libraries</span><br>
 │&nbsp;&nbsp;├─ embed-assets.mjs · add-deck-menu.mjs · verify-deck.mjs<br>
 │&nbsp;&nbsp;├─ write-rebuild-script.mjs · screenshot-deck.mjs · export-pdf.mjs<br>
-│&nbsp;&nbsp;├─ fix-pdf-soft-masks.mjs · README.md<span class="sz">51 KB</span><br>
+│&nbsp;&nbsp;├─ fix-pdf-soft-masks.mjs · <b>export-pptx.mjs</b> · <b>compare-pptx.mjs</b><br>
 │&nbsp;&nbsp;└─ <span class="d">lib/</span> find-browser.mjs · cdp.mjs · print-layout.js<br>
-│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pdf-soft-masks.mjs<span class="sz">23 KB</span> · <b>deck-menu.js</b><span class="sz">326 KB</span><br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pdf-soft-masks.mjs · <b>deck-menu.js</b><span class="sz">339 KB</span><br>
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>pptx-extract.js</b> · <b>pptx-writer.mjs</b><span class="sz">93 KB</span><br>
 └─ <span class="d">references/</span><span class="cm">design decisions, functions, config guide, issue register</span>
   </div>
   <div>
-    {lst([("doc","<b>SKILL.md is the contract.</b> Inputs, defaults, palette, templates, embedding rules, the editor's behaviour, the PDF rules and the quality checklist — all in one file, no separate configuration."),
+    {lst([("doc","<b>SKILL.md is the contract.</b> Inputs, defaults, palette, templates, embedding rules, the editor's behaviour, the PDF and PowerPoint rules and the quality checklist — all in one file, no separate configuration."),
           ("globe","<b>Everything resolves relative to the skill root</b>, never to the working directory: the scripts find the assets next to themselves, so the skill works from any folder, on any machine, through a symlink."),
           ("link","<b>Installed as a project skill</b> via a symlink in <code class='code'>.claude/skills/</code> pointing at the plugin checkout, so the working tree is the live skill."),
-          ("db","<b>References are history, not behaviour</b>: every design decision from v1.3 to v1.19 is recorded with its rationale, mechanism and verification in project-design.md.")], True)}
+          ("db","<b>References are history, not behaviour</b>: every design decision from v1.3 to v1.25 is recorded with its rationale, mechanism and verification in project-design.md.")], True)}
   </div>
 </div></div>''')
 
 rows = [("embed-assets.mjs","Replaces every <code class='code'>&#123;&#123;TOKEN&#125;&#125;</code> with the verbatim data URI; tokens map to files by name; fails loudly on a missing asset.","no","0 / 1"),
-        ("add-deck-menu.mjs","Inlines one <code class='code'>&lt;script id=\"nbg-deck-menu-script\" data-nbg-deck-menu=\"13\"&gt;</code> before the last <code class='code'>&lt;/body&gt;</code>: print-layout.js then deck-menu.js. Idempotent; upgrades older blocks; <code class='code'>--remove</code> strips.","no","0 / 1"),
+        ("add-deck-menu.mjs","Inlines one <code class='code'>&lt;script id=\"nbg-deck-menu-script\" data-nbg-deck-menu=\"17\"&gt;</code> before the last <code class='code'>&lt;/body&gt;</code>: print-layout.js then deck-menu.js. Idempotent; upgrades older blocks; <code class='code'>--remove</code> strips.","no","0 / 1"),
         ("verify-deck.mjs","The gate: tokens, image paths, image count, size, bare-logo text, editor block version. <code class='code'>--strict</code> promotes the warnings to failures.","no","0 pass / 1 fail"),
         ("write-rebuild-script.mjs","Writes <code class='code'>&lt;deck&gt;.rebuild.mjs</code> next to the deck: a self-contained script that later re-embeds the skill's current editor block (backup, verify, re-export the PDF); <code class='code'>--check</code> only reports.","no","0 / 1 / 2"),
         ("screenshot-deck.mjs","Drives a headless browser over the DevTools protocol; isolates the Nth <code class='code'>.slide</code> in place, so <code class='code'>.active</code>, <code class='code'>.hidden</code>, inline-display and stacked decks all work; PNG per slide per viewport.","yes","0 / 1 / 3 no browser"),
         ("export-pdf.mjs","Lifts the host layer, prints with <code class='code'>Page.printToPDF</code> at the slide box, verifies pages = slides and slide box = page box; then re-anchors the soft masks so shadows render in macOS Preview.","yes","0 / 1 / 3 no browser"),
-        ("fix-pdf-soft-masks.mjs","Re-anchors the soft masks of a PDF exported earlier (or saved from the print dialog): an incremental update, the original bytes intact; <code class='code'>--check</code> only reports.","no","0 / 1 / 2")]
+        ("fix-pdf-soft-masks.mjs","Re-anchors the soft masks of a PDF exported earlier (or saved from the print dialog): an incremental update, the original bytes intact; <code class='code'>--check</code> only reports.","no","0 / 1 / 2"),
+        ("export-pptx.mjs","Measures every slide in the browser and writes an editable .pptx: text boxes with real runs, shapes, cropped pictures, SVG pictures, the theme's fonts and colours.","yes","0 / 1 / 3 no browser"),
+        ("compare-pptx.mjs","Renders the .pptx with PowerPoint (macOS) or LibreOffice and writes deck | PowerPoint | difference images with a score per slide.","yes","0 / 1 / 3 missing tool")]
 tr = "".join(f'<tr><td class="b"><span class="code">{a}</span></td><td>{b}</td><td class="c">{pill("browser","prog") if c=="yes" else pill("none","grey")}</td><td class="c">{d}</td></tr>' for a,b,c,d in rows)
-add(0, header(DV, "THE SCRIPTS AND LIBRARIES", "Zero-dependency Node (18+). No npm install, no build step; seven single-file scripts that import from lib/.") + f'''
+add(0, header(DV, "THE SCRIPTS AND LIBRARIES", "Zero-dependency Node (18+). No npm install, no build step; nine single-file scripts that import from lib/.") + f'''
 <div class="body fill">
-  <table class="tbl compact" style="width:100%;border-collapse:collapse"><thead><tr><th style="width:250px">Script</th><th>What it does</th><th style="width:130px;text-align:center">Needs</th><th style="width:190px;text-align:center">Exit codes</th></tr></thead><tbody>{tr}</tbody></table>
+  <table class="tbl compact" style="width:100%;border-collapse:collapse;margin-top:-72px"><thead><tr><th style="width:250px">Script</th><th>What it does</th><th style="width:130px;text-align:center">Needs</th><th style="width:190px;text-align:center">Exit codes</th></tr></thead><tbody>{tr}</tbody></table>
   <div class="libs">
     {mini("search","lib/find-browser.mjs",'<p>Locates Chrome, Chromium or Edge; <code class="code">--browser</code>, <code class="code">NBG_BROWSER</code>, <code class="code">CHROME_BIN</code> override.</p>')}
     {mini("link","lib/cdp.mjs",'<p>A minimal DevTools-protocol client over the debugging pipe: launch, navigate, evaluate, print, count pages.</p>')}
     {mini("doc","lib/print-layout.js",'<p>The print shim shared by the exporter and the in-deck menu; a registry undoes every change after printing. On the menu path it prints blurred shadows as images (v13).</p>')}
     {mini("layers","lib/pdf-soft-masks.mjs",'<p>Zero-dependency PDF rewriter: re-anchors Chrome\'s luminosity soft masks so macOS Preview renders shadows; incremental update.</p>')}
     {mini("wrench","lib/deck-menu.js",'<p>The editor: ~4,000 lines of plain browser JavaScript — editing, selection, SVG parts, toolbars, structure, assistant, persistence, print.</p>')}
+    {mini("monitor","lib/pptx-*",'<p><b>pptx-extract.js</b> measures every slide in the browser; <b>pptx-writer.mjs</b> writes the Office Open XML and its zip.</p>')}
   </div>
 </div>''')
 
@@ -489,6 +495,31 @@ add(0, header(DV, "THE PDF PATH", "The PDF is the deck, printed by the same engi
   </div>
 </div></div>''')
 
+add(0, header(DV, "THE POWERPOINT PATH", "An editable .pptx, converted element by element from the deck the browser lays out. Never a screenshot per slide.") + f'''
+<div class="body fill"><div class="two">
+  <div>
+    <div class="seclbl">What export-pptx does</div>
+    {lst([("play","Opens the deck in headless Chrome with the PDF exporter's print layout, then <b>measures</b> every element where the browser put it — positions are Chrome's, never re-derived."),
+          ("doc","<b>Text → text boxes</b> with real runs: typeface and the weight actually drawn (<i>Aptos Light</i>, <i>Avenir Next Ultra Light</i>), size, colour, letter-spacing, capitals, raised runs, links, line breaks."),
+          ("layers","<b>Boxes → shapes</b>: fills and gradients, borders, per-corner radii, shadows, transparency. <b>Photos → pictures</b> with their full source and a crop. <b>Inline SVG → SVG pictures</b>, convertible to shapes in PowerPoint."),
+          ("star","The theme carries the deck's fonts and palette, so new text and PowerPoint's colour picker match the deck.")], True)}
+  </div>
+  <div>
+    <div class="seclbl">Why it lands where the HTML does</div>
+    {lst([("search","<b>Calibrated against PowerPoint</b>: its first baseline sits at 0.75 × the line pitch, so each box is placed to put it on Chrome's; the pitch is written as a percentage, because exact spacing is rounded to whole points."),
+          ("check","<b>Chrome's line breaks are kept</b> where a greedy renderer cannot find them: balanced titles, paragraphs with code or key chips."),
+          ("monitor","<b>compare-pptx</b> renders the file in PowerPoint itself and writes deck | PowerPoint | difference images with a score per slide — read, not just produced."),
+          ("globe","<b>Fonts are named, not embedded</b>: the presenting machine needs the deck's faces. Aptos ships with Office.")], True)}
+  </div>
+</div></div>''')
+
+add(0, header(DV, "THE POWERPOINT FILE, CHECKED", "Two slides of this very deck: the HTML, its .pptx as rendered, and the pixels that differ. compare-pptx writes one such image per slide.") + f'''
+<div class="body fill" style="display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:-64px">
+  <img src="{img_uri("pptx-check-07.png")}" alt="Slide 7: HTML, PowerPoint file, difference" style="width:1400px;border:1px solid #D9E4E5;border-radius:8px">
+  <img src="{img_uri("pptx-check-31.png")}" alt="Slide 31: HTML, PowerPoint file, difference" style="width:1400px;border:1px solid #D9E4E5;border-radius:8px">
+  <div class="insight" style="margin-top:2px;width:1400px"><span class="tag">How to read it</span><p>Left the deck, middle the .pptx (here rendered by LibreOffice), right the differences in red. Below about 0.5 % solid difference is anti-aliasing and sub-pixel font metrics; text that re-wraps or a shape out of place would show as a red block.</p></div>
+</div>''')
+
 add(0, header(DV, "THE CONFIGURATION HOOK: ONE EDITOR FOR ANY HTML PAGE", "Since v1.15 the editor is configured, not forked. A deck keeps its defaults; any other document declares what its editable regions are.") + f'''
 <div class="body fill"><div class="two">
   <div>
@@ -516,13 +547,13 @@ add(0, header(DV, "THE CONFIGURATION HOOK: ONE EDITOR FOR ANY HTML PAGE", "Since
 
 add(0, header(DV, "RULES THAT KEEP IT SAFE", "The constraints written into SKILL.md that every generated deck, and every future change to the skill, must respect.") + f'''
 <div class="body fill"><div class="grid3" style="gap:28px">
-  {mini("shield","Delivery",'<ul><li>Run order: author → embed → add menu → verify strict → rebuild script → screenshots → PDF. Never deliver a deck that fails the gate.</li><li>Every image a <code class="code">data:</code> URI; the logo always the bundled lockup.</li><li>Fit at 1366×768 and 1440×900; no element collisions; 32 px between groups, 72 px above the footer.</li><li>PDF only from the verified HTML, only through the exporter.</li></ul>', True)}
+  {mini("shield","Delivery",'<ul><li>Run order: author → embed → add menu → verify strict → rebuild script → screenshots → PDF / PowerPoint. Never deliver a deck that fails the gate.</li><li>Every image a <code class="code">data:</code> URI; the logo always the bundled lockup.</li><li>Fit at 1366×768 and 1440×900; no element collisions; 32 px between groups, 72 px above the footer.</li><li>PDF and PowerPoint only from the verified HTML, only through the exporters; the .pptx always compared.</li></ul>', True)}
   {mini("key","Secrets & fallbacks",'<ul><li>The skill holds <b>no credentials</b>. Assistant keys are the viewer\'s and live only in their browser — never in the skill, a deck or a saved copy.</li><li><b>No fallback values</b>: a missing input is a question, a missing setting a message. Exceptions are written into the project memory first.</li><li>The agent never enters endpoints or keys for a recipient and never relies on the assistant for its own work.</li></ul>', True)}
-  {mini("layers","Scope",'<ul><li><b>The look cannot be left</b> from the editor: fonts limited to the design-system stacks, colours to the NBG-inspired palette. The Tree tab\'s source editor is the one deliberate exception, for experts.</li><li>The editor changes text, formatting, geometry, order, groups and shape style. Images, new elements and structure are the skill\'s job — regenerate.</li><li><b>PowerPoint is out of scope</b>; newsletters, GPT and NotebookLM artifacts of the original project are excluded unless asked for.</li></ul>', True)}
+  {mini("layers","Scope",'<ul><li><b>The look cannot be left</b> from the editor: fonts limited to the design-system stacks, colours to the NBG-inspired palette. The Tree tab\'s source editor is the one deliberate exception, for experts.</li><li>The editor changes text, formatting, geometry, order, groups and shape style. Images, new elements and structure are the skill\'s job — regenerate.</li><li>PowerPoint is an <b>export</b> of the HTML deck, never a second source to edit and re-import; newsletters, GPT and NotebookLM artifacts of the original project are excluded unless asked for.</li></ul>', True)}
 </div></div>''')
 
 # ================================================================= closing
-add(0, header("Summary", "USING IT TOMORROW", "One line for recipients, six commands for builders, one marketplace to install from.") + f'''
+add(0, header("Summary", "USING IT TOMORROW", "One line for recipients, eight commands for builders, one marketplace to install from.") + f'''
 <div class="body fill"><div class="two">
   <div>
     <div class="seclbl">Tell the recipient</div>
@@ -532,7 +563,7 @@ add(0, header("Summary", "USING IT TOMORROW", "One line for recipients, six comm
           ("doc","This deck: <code class='code'>github.com/BikS2013-presentations/deck-work-nbgdesign</code>, browsable on GitHub Pages and always current as <code class='code'>deck/NBG-Design-Skill-Explained-latest.html</code>; its generator and <code class='code'>rebuild.sh</code> live in the same repository.")], True)}
   </div>
   <div>
-    <div class="seclbl">The six commands</div>
+    <div class="seclbl">The eight commands</div>
     <div class="tree" style="margin-top:18px;background:#F5F8F6;border-radius:10px;padding:22px 26px;font-size:16px">
 <span class="cm" style="margin:0">S=&lt;skill-root&gt;/scripts</span><br>
 node $S/embed-assets.mjs deck.html<span class="cm">tokens → data URIs</span><br>
@@ -540,12 +571,14 @@ node $S/add-deck-menu.mjs deck.html<span class="cm">inline the editor</span><br>
 node $S/verify-deck.mjs deck.html --strict<span class="cm">the gate</span><br>
 node $S/write-rebuild-script.mjs deck.html<span class="cm">deck.rebuild.mjs, delivered too</span><br>
 node $S/screenshot-deck.mjs deck.html -o shots<span class="cm">look</span><br>
-node $S/export-pdf.mjs deck.html<span class="cm">one page per slide</span>
+node $S/export-pdf.mjs deck.html<span class="cm">one page per slide</span><br>
+node $S/export-pptx.mjs deck.html<span class="cm">editable PowerPoint</span><br>
+node $S/compare-pptx.mjs deck.html deck.pptx<span class="cm">check it</span>
     </div>
     <div class="seclbl" style="margin-top:36px">Next steps</div>
     {lst([("steps","Ask for your next deck in this look and hand the three files to its readers."),
           ("users","Hand a deck to two colleagues, watch them edit it, and feed the friction back into the next release."),
-          ("star","Commit and push the v1.19 working tree of the plugin.")], True)}
+          ("monitor","Ask for the PowerPoint version of a deck and read its comparison images.")], True)}
   </div>
 </div></div>''')
 

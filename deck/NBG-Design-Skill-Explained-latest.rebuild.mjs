@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // NBG-Design-Skill-Explained-latest.rebuild.mjs — rebuild "NBG-Design-Skill-Explained-latest.html" with the current NBG Design editing tools.
 //
-// Written by the nbg-design skill (scripts/write-rebuild-script.mjs) on 2026-09-06,
-// when the deck was delivered with editor block v13 (plugin 1.19.0).
+// Written by the nbg-design skill (scripts/write-rebuild-script.mjs) on 2026-10-10,
+// when the deck was delivered with editor block v17 (plugin 1.25.0).
 // The deck carries the in-deck editing tools (right-click menu, text and shape toolbars, structure
 // panel, AI assistant, "Export to PDF", "Save edited copy") as one inlined script block. Those tools
 // evolve with the skill; the deck does not. Run this script after the nbg-design skill / plugin was
@@ -19,27 +19,33 @@
 // Where the nbg-design scripts are looked up (highest priority first):
 //   --scripts <dir>             explicit;
 //   NBG_DESIGN_SCRIPTS=<dir>    environment;
-//   the recorded directory      /Users/giorgosmarinos/ai-coding/nbg-design-skill-dev/aihub-skills/plugins/nbg-design/skills/nbg-design/scripts
-//                               (where the skill was when the deck was delivered).
+//   the plugin registry         the CURRENT install of (not recorded: the deck was built outside an installed plugin)
+//                               in Claude Code's plugins/installed_plugins.json;
+//   the recorded directory      /Users/giorgosmarinos/coding-agents/nbg-design-skill-dev/aihub-skills/plugins/nbg-design/skills/nbg-design/scripts
+//                               (where the skill was when this script was last written).
 // The directory must hold add-deck-menu.mjs, verify-deck.mjs, export-pdf.mjs and lib/ (the skill's
-// scripts/ folder). Anything else is an error: the script never substitutes another location.
+// scripts/ folder). Anything else is an error. After a rebuild this script rewrites its own record from
+// the directory it used, so the next run starts from there.
 //
 // Exit: 0 = rebuilt (or --check: current), 1 = error / gate failed (or --check: not current),
 //       2 = usage, 3 = HTML rebuilt but no Chrome/Chromium/Edge on this host for the PDF.
 
 import { readFileSync, writeFileSync, copyFileSync, existsSync } from 'node:fs';
-import { resolve, dirname, basename } from 'node:path';
+import { resolve, dirname, basename, join } from 'node:path';
+import { homedir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 const RECORD = {
-  "generated": "2026-09-06T10:27:38.035Z",
+  "generated": "2026-10-10T15:34:59.854Z",
   "deck": "NBG-Design-Skill-Explained-latest.html",
   "pdf": "NBG-Design-Skill-Explained-latest.pdf",
-  "scriptsDir": "/Users/giorgosmarinos/ai-coding/nbg-design-skill-dev/aihub-skills/plugins/nbg-design/skills/nbg-design/scripts",
-  "blockVersion": 13,
-  "shippedVersion": 13,
-  "pluginVersion": "1.19.0",
+  "scriptsDir": "/Users/giorgosmarinos/coding-agents/nbg-design-skill-dev/aihub-skills/plugins/nbg-design/skills/nbg-design/scripts",
+  "pluginKey": null,
+  "pluginSubpath": null,
+  "blockVersion": 17,
+  "shippedVersion": 17,
+  "pluginVersion": "1.25.0",
   "config": null,
   "exportArgs": []
 };
@@ -51,7 +57,8 @@ Usage: node ${basename(fileURLToPath(import.meta.url))} [<deck.html>] [--scripts
 
   <deck.html>       Another copy of the deck to rebuild (default: ${RECORD.deck} next to this script).
   --scripts <dir>   The nbg-design skill's scripts/ directory (default: NBG_DESIGN_SCRIPTS, else the
-                    recorded ${RECORD.scriptsDir}).
+                    current install in Claude Code's plugin registry, else the recorded
+                    ${RECORD.scriptsDir}).
   --pdf <file>      Export the PDF to this path (default: ${RECORD.pdf || 'none — the deck was delivered without a PDF'}).
   --no-pdf          Skip the PDF export.
   --no-backup       Do not copy the deck to <name>.backup-<stamp>.html before rebuilding.
@@ -78,10 +85,34 @@ function parseArgs(argv) {
   return a;
 }
 
-/** Resolve and validate the nbg-design scripts directory — explicit flag, environment, recorded path; nothing else. */
+const blockVersionIn = (dir) => Number((readFileSync(join(dir, 'lib', 'deck-menu.js'), 'utf8').match(/var VERSION = (\d+);/) || [])[1]) || 0;
+
+/** The scripts directory of the CURRENT install of this plugin, from Claude Code's plugin registry — null when the
+ *  deck was built outside an installed plugin, or the plugin is not installed on this machine. The recorded
+ *  directory names a versioned cache folder that outlives updates, so the registry is asked first. */
+function installedScriptsDir() {
+  if (!RECORD.pluginKey || !RECORD.pluginSubpath) return null;
+  const reg = join(process.env.CLAUDE_CONFIG_DIR || join(homedir(), '.claude'), 'plugins', 'installed_plugins.json');
+  if (!existsSync(reg)) return null;
+  let data;
+  try { data = JSON.parse(readFileSync(reg, 'utf8')); }
+  catch (e) { throw new Error('cannot read the plugin registry ' + reg + ': ' + e.message); }
+  const plugins = (data && typeof data.plugins === 'object' && data.plugins) || data || {};
+  const found = [].concat(plugins[RECORD.pluginKey] || [])
+    .filter((e) => e && typeof e.installPath === 'string')
+    .map((e) => join(e.installPath, RECORD.pluginSubpath))
+    .filter((d) => existsSync(join(d, 'lib', 'deck-menu.js')));
+  if (!found.length) return null;
+  // several scopes may carry the plugin (user / project): the newest editor wins
+  return found.map((d) => ({ d, v: blockVersionIn(d) })).sort((a, b) => b.v - a.v)[0].d;
+}
+
+/** Resolve and validate the nbg-design scripts directory — explicit flag, environment, plugin registry,
+ *  recorded path; nothing else. */
 function resolveScriptsDir(explicit) {
-  const source = explicit ? '--scripts' : process.env.NBG_DESIGN_SCRIPTS ? 'NBG_DESIGN_SCRIPTS' : 'the recorded directory';
-  const dir = resolve(process.cwd(), explicit || process.env.NBG_DESIGN_SCRIPTS || RECORD.scriptsDir);
+  const installed = explicit || process.env.NBG_DESIGN_SCRIPTS ? null : installedScriptsDir();
+  const source = explicit ? '--scripts' : process.env.NBG_DESIGN_SCRIPTS ? 'NBG_DESIGN_SCRIPTS' : installed ? 'the plugin registry' : 'the recorded directory';
+  const dir = resolve(process.cwd(), explicit || process.env.NBG_DESIGN_SCRIPTS || installed || RECORD.scriptsDir);
   const need = ['add-deck-menu.mjs', 'verify-deck.mjs', 'export-pdf.mjs', 'lib/deck-menu.js', 'lib/print-layout.js'];
   for (const f of need) {
     if (!existsSync(resolve(dir, f))) {
@@ -149,6 +180,20 @@ async function main() {
     const r = addMenu(html, RECORD.config || undefined);
     writeFileSync(deck, r.html, 'utf8');
     console.log(`\n▶ editor block: v${r.version} ${r.status}`);
+
+    // 2b — this script's own record: the directory just used and the versions it produced, rendered by the
+    //      skill's CURRENT generator, so the next run neither starts from a stale folder nor stale logic
+    const self = fileURLToPath(import.meta.url);
+    if (existsSync(resolve(dir, 'write-rebuild-script.mjs'))) {
+      const gen = await import(pathToFileURL(resolve(dir, 'write-rebuild-script.mjs')).href);
+      if (typeof gen.renderRebuildScript === 'function') {
+        const record = { ...RECORD, generated: new Date().toISOString(), scriptsDir: dir, blockVersion: Number(r.version), shippedVersion: Number(r.version) };
+        if (typeof gen.findPluginInstall === 'function') Object.assign(record, gen.findPluginInstall(dir));
+        if (typeof gen.readPluginVersion === 'function') record.pluginVersion = gen.readPluginVersion(dir);
+        writeFileSync(self, gen.renderRebuildScript(record), 'utf8');
+        console.log(`\n▶ rebuild script: ${basename(self)} now records ${dir}`);
+      }
+    }
 
     // 3 — the strict gate
     if (run('verify', dir, 'verify-deck.mjs', [deck, '--strict']) !== 0) {

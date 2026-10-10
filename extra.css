@@ -154,7 +154,7 @@
 /* scripts slide: seven rows + five library cards */
 .tbl.compact th{padding:9px 14px}
 .tbl.compact td{padding:9px 14px;font-size:16px;line-height:1.35}
-.libs{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:22px}
-.libs .mini{padding:16px 18px}
+.libs{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:22px}
+.libs .mini{padding:14px 15px}
 .libs .mini h4,.libs .mini .mini-t{font-size:16px}
 .libs .mini p{font-size:14.5px;line-height:1.4;margin:0}
